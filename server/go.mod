@@ -1,3 +1,3 @@
-module github.com/dprio/currency-exchange/client
+module github.com/dprio/currency-exchange/server
 
 go 1.24.4
