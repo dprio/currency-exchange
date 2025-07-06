@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import "github.com/dprio/currency-exchange/server/cmd/app"
 
 func main() {
-	fmt.Println("Hello, World!")
+
+	app := app.New()
+	app.Start()
+
 }
