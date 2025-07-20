@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS dollar_quotes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    value FLOAT NOT NULL,
+    created_at DATETIME NOT NULL
+); 
