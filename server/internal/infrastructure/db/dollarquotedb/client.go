@@ -1,4 +1,4 @@
-package dollarquote
+package dollarquotedb
 
 import "database/sql"
 

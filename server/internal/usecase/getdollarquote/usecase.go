@@ -12,7 +12,7 @@ type UseCase interface {
 
 type (
 	dollarQuoteHTTPClientGateway interface {
-		GetDollarQuote(ctx context.Context) (*dollarquote.DollarQuote, error)
+		GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, error)
 	}
 
 	useCase struct {
@@ -27,7 +27,7 @@ func New(dollarQuoteHTTPClientGateway dollarQuoteHTTPClientGateway) UseCase {
 }
 
 func (u *useCase) Execute(ctx context.Context) (*dollarquote.DollarQuote, error) {
-	dollarQuote, err := u.dollarQuoteHTTPClientGateway.GetDollarQuote(ctx)
+	dollarQuote, err := u.dollarQuoteHTTPClientGateway.GetUSDQuote(ctx)
 	if err != nil {
 		return nil, err
 	}

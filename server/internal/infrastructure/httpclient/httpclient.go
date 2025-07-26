@@ -1,19 +1,19 @@
-package infrastructure
+package httpclient
 
 import (
 	"net/http"
 	"time"
 
-	"github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient/dollarquotehttpclient"
+	"github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient/economiapi"
 )
 
 type HTTPClient struct {
-	DollarQuoteHTTPClient dollarquotehttpclient.DollarQuoteHTTPClient
+	EconomiaAPIHTTPClient economiapi.Client
 }
 
 func New() HTTPClient {
 	return HTTPClient{
-		DollarQuoteHTTPClient: dollarquotehttpclient.New(newClient(10 * time.Second)),
+		EconomiaAPIHTTPClient: economiapi.New(newClient(10 * time.Second)),
 	}
 }
 
