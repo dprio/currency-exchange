@@ -15,8 +15,13 @@ type (
 		GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, error)
 	}
 
+	repositoy interface {
+		SaveDollarQuote(ctx context.Context, entity dollarquote.DollarQuote) (*dollarquote.DollarQuote, error)
+	}
+
 	useCase struct {
 		dollarQuoteHTTPClientGateway dollarQuoteHTTPClientGateway
+		repositoy                    repositoy
 	}
 )
 
@@ -32,5 +37,5 @@ func (u *useCase) Execute(ctx context.Context) (*dollarquote.DollarQuote, error)
 		return nil, err
 	}
 
-	return dollarQuote, nil
+	return u.repositoy.SaveDollarQuote(ctx, *dollarQuote)
 }

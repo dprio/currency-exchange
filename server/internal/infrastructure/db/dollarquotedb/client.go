@@ -1,10 +1,13 @@
 package dollarquotedb
 
-import "database/sql"
+import (
+	"context"
+	"database/sql"
+)
 
 type Client interface {
-	SaveDollarQuote(entity DollarQuoteEntity) (*DollarQuoteEntity, error)
-	FindDollarQuoteByID(id int64) (*DollarQuoteEntity, error)
+	SaveDollarQuote(ctx context.Context, entity DollarQuoteEntity) (*DollarQuoteEntity, error)
+	FindDollarQuoteByID(ctx context.Context, id int64) (*DollarQuoteEntity, error)
 }
 
 type client struct {
@@ -15,9 +18,9 @@ func NewClient(db *sql.DB) Client {
 	return &client{db: db}
 }
 
-func (c *client) SaveDollarQuote(entity DollarQuoteEntity) (*DollarQuoteEntity, error) {
+func (c *client) SaveDollarQuote(ctx context.Context, entity DollarQuoteEntity) (*DollarQuoteEntity, error) {
 	query := "INSERT INTO dollar_quotes (value, created_at) VALUES (?, ?)"
-	result, err := c.db.Exec(query, entity.Value, entity.CreatedAt)
+	result, err := c.db.ExecContext(ctx, query, entity.Value, entity.CreatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -33,9 +36,9 @@ func (c *client) SaveDollarQuote(entity DollarQuoteEntity) (*DollarQuoteEntity, 
 	return &resp, nil
 }
 
-func (c *client) FindDollarQuoteByID(id int64) (*DollarQuoteEntity, error) {
+func (c *client) FindDollarQuoteByID(ctx context.Context, id int64) (*DollarQuoteEntity, error) {
 	query := "SELECT id, value, created_at FROM dollar_quotes WHERE id = ?"
-	stmt, err := c.db.Prepare(query)
+	stmt, err := c.db.PrepareContext(ctx, query)
 	if err != nil {
 		return nil, err
 	}
