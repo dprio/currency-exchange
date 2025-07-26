@@ -5,7 +5,8 @@ import (
 	"net/http"
 
 	"github.com/dprio/currency-exchange/server/cmd/handlers"
-	httpclient "github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient"
+	"github.com/dprio/currency-exchange/server/internal/gateway/httpgateway"
+	"github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient"
 	"github.com/dprio/currency-exchange/server/internal/usecase"
 )
 
@@ -20,7 +21,9 @@ func New() *App {
 
 	httpClients := httpclient.New()
 
-	usecases := usecase.New(httpClients)
+	adapters := httpgateway.New(httpClients)
+
+	usecases := usecase.New(adapters)
 
 	handlers := handlers.New(usecases)
 
