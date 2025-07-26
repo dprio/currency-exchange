@@ -11,6 +11,6 @@ type Repositories struct {
 
 func New(db db.DB) Repositories {
 	return Repositories{
-		DollarQuoteRepository: dollarquoterepository.New(&db.DollarQuoteClient),
+		DollarQuoteRepository: dollarquoterepository.New(db.DollarQuoteClient),
 	}
 }
