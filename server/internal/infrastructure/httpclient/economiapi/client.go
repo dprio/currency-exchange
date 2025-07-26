@@ -44,8 +44,6 @@ func (c *dollarQuoteHTTPClient) GetDollarQuote(ctx context.Context) (*ExchangeRa
 		return nil, fmt.Errorf("error calling economi-api. Error: [%s]", string(body))
 	}
 
-	fmt.Println(string(body))
-
 	var exchangeRateResponse ExchangeRateResponse
 	if err := json.Unmarshal(body, &exchangeRateResponse); err != nil {
 		return nil, err

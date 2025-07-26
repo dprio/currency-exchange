@@ -4,19 +4,19 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/dprio/currency-exchange/server/internal/infrastructure/db/dollarquote"
+	"github.com/dprio/currency-exchange/server/internal/infrastructure/db/dollarquotedb"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 type DB struct {
-	DollarQuoteClient dollarquote.Client
+	DollarQuoteClient dollarquotedb.Client
 }
 
 func New() DB {
 	db := startDB()
 
 	return DB{
-		DollarQuoteClient: dollarquote.NewClient(db),
+		DollarQuoteClient: dollarquotedb.NewClient(db),
 	}
 }
 

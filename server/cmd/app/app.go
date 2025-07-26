@@ -6,6 +6,8 @@ import (
 
 	"github.com/dprio/currency-exchange/server/cmd/handlers"
 	"github.com/dprio/currency-exchange/server/internal/gateway/httpgateway"
+	"github.com/dprio/currency-exchange/server/internal/gateway/repository"
+	"github.com/dprio/currency-exchange/server/internal/infrastructure/db"
 	"github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient"
 	"github.com/dprio/currency-exchange/server/internal/usecase"
 )
@@ -19,11 +21,15 @@ type App struct {
 
 func New() *App {
 
+	dataBase := db.New()
+
 	httpClients := httpclient.New()
 
-	adapters := httpgateway.New(httpClients)
+	httpGateways := httpgateway.New(httpClients)
 
-	usecases := usecase.New(adapters)
+	repositories := repository.New(dataBase)
+
+	usecases := usecase.New(httpGateways, repositories)
 
 	handlers := handlers.New(usecases)
 

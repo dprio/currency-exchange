@@ -2,6 +2,7 @@ package dollarquoterepository
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
@@ -27,6 +28,7 @@ func (r *repository) SaveDollarQuote(ctx context.Context, dollarQuote dollarquot
 
 	entity, err := r.db.SaveDollarQuote(ctxTimeout, dollarquotedb.NewDollarQuoteEntity(dollarQuote))
 	if err != nil {
+		fmt.Printf("error saving dollar quote. [Error: %s]\n", err.Error())
 		return nil, err
 	}
 
@@ -39,6 +41,7 @@ func (r *repository) FindDollarQuoteByID(ctx context.Context, id int64) (*dollar
 
 	entity, err := r.db.FindDollarQuoteByID(ctxTimeout, id)
 	if err != nil {
+		fmt.Printf("error finding dollar quote. [Error: %s]\n", err.Error())
 		return nil, err
 	}
 
