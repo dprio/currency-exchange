@@ -2,6 +2,7 @@ package economiaapiagateway
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
@@ -34,6 +35,7 @@ func (a *adapter) GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, er
 
 	resp, err := a.client.GetDollarQuote(ctxTimeout)
 	if err != nil {
+		fmt.Printf("error calling economiaAPI. [Error: %s]\n", err.Error())
 		return nil, err
 	}
 
