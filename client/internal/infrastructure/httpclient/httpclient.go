@@ -4,16 +4,16 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/dprio/currency-exchange/client/internal/infrastructure/httpclient/dollarquote"
+	"github.com/dprio/currency-exchange/client/internal/infrastructure/httpclient/dollarexchangerate"
 )
 
 type HTTPClient struct {
-	DollarQuoteHTTPClient dollarquote.Client
+	DollarExchangeRateHTTPClient dollarexchangerate.Client
 }
 
 func New() HTTPClient {
 	return HTTPClient{
-		DollarQuoteHTTPClient: dollarquote.New(newClient(10 * time.Second)),
+		DollarExchangeRateHTTPClient: dollarexchangerate.New(newClient(10 * time.Second)),
 	}
 }
 

@@ -5,45 +5,45 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
-	"github.com/dprio/currency-exchange/server/internal/infrastructure/db/dollarquotedb"
+	"github.com/dprio/currency-exchange/server/internal/domain/dollarexchangerate"
+	"github.com/dprio/currency-exchange/server/internal/infrastructure/db/dollarexchangeratedb"
 )
 
 type Repository interface {
-	SaveDollarQuote(ctx context.Context, entity dollarquote.DollarQuote) (*dollarquote.DollarQuote, error)
-	FindDollarQuoteByID(ctx context.Context, id int64) (*dollarquote.DollarQuote, error)
+	SaveDollarExchangeRate(ctx context.Context, entity dollarexchangerate.DollarExchangeRate) (*dollarexchangerate.DollarExchangeRate, error)
+	FindDollarExchangeRateByID(ctx context.Context, id int64) (*dollarexchangerate.DollarExchangeRate, error)
 }
 
 type repository struct {
-	db dollarquotedb.Client
+	db dollarexchangeratedb.Client
 }
 
-func New(db dollarquotedb.Client) Repository {
+func New(db dollarexchangeratedb.Client) Repository {
 	return &repository{db: db}
 }
 
-func (r *repository) SaveDollarQuote(ctx context.Context, dollarQuote dollarquote.DollarQuote) (*dollarquote.DollarQuote, error) {
+func (r *repository) SaveDollarExchangeRate(ctx context.Context, exchangeRate dollarexchangerate.DollarExchangeRate) (*dollarexchangerate.DollarExchangeRate, error) {
 	ctxTimeout, cancel := context.WithTimeout(ctx, 10*time.Millisecond)
 	defer cancel()
 
-	entity, err := r.db.SaveDollarQuote(ctxTimeout, dollarquotedb.NewDollarQuoteEntity(dollarQuote))
+	entity, err := r.db.SaveDollarExchangeRate(ctxTimeout, dollarexchangeratedb.NewDollarQuoteEntity(exchangeRate))
 	if err != nil {
 		fmt.Printf("error saving dollar quote. [Error: %s]\n", err.Error())
 		return nil, err
 	}
 
-	return entity.ToDollarQuote(), nil
+	return entity.ToDollarExchnageRate(), nil
 }
 
-func (r *repository) FindDollarQuoteByID(ctx context.Context, id int64) (*dollarquote.DollarQuote, error) {
+func (r *repository) FindDollarExchangeRateByID(ctx context.Context, id int64) (*dollarexchangerate.DollarExchangeRate, error) {
 	ctxTimeout, cancel := context.WithTimeout(ctx, 10*time.Millisecond)
 	defer cancel()
 
-	entity, err := r.db.FindDollarQuoteByID(ctxTimeout, id)
+	entity, err := r.db.FindDollarExchangeRate(ctxTimeout, id)
 	if err != nil {
-		fmt.Printf("error finding dollar quote. [Error: %s]\n", err.Error())
+		fmt.Printf("error finding dollar exchange rate. [Error: %s]\n", err.Error())
 		return nil, err
 	}
 
-	return entity.ToDollarQuote(), nil
+	return entity.ToDollarExchnageRate(), nil
 }

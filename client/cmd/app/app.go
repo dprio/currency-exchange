@@ -37,12 +37,12 @@ func (a *App) Start(ctx context.Context) {
 		fmt.Scan(&input)
 
 		switch input {
-		case "quote":
-			quote, err := a.UseCases.GetDollarQuoteUseCase.Execute(ctx)
+		case "dollar":
+			dollar, err := a.UseCases.GetDollarExchangeRateUseCase.Execute(ctx)
 			if err != nil {
 				continue
 			}
-			fmt.Printf("Dollar Quote -> US$ %f\n", quote)
+			fmt.Printf("Dollar Quote -> US$ %f\n", dollar)
 		case "exit":
 			fmt.Println("Parando a execução...")
 			return
