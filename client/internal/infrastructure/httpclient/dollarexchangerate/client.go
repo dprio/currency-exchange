@@ -1,4 +1,4 @@
-package dollarquote
+package dollarexchangerate
 
 import (
 	"context"
@@ -11,18 +11,18 @@ import (
 const url = "http://localhost:8080/cotacao"
 
 type Client interface {
-	GetDollarQuote(ctx context.Context) (*DollarQuoteResponse, error)
+	GetDollarExchangeRate(ctx context.Context) (*DollarExchangeRateResponse, error)
 }
 
-type dollarQuoteHTTPClient struct {
+type dollarexchangerateHTTPClient struct {
 	client *http.Client
 }
 
 func New(client *http.Client) Client {
-	return &dollarQuoteHTTPClient{client: client}
+	return &dollarexchangerateHTTPClient{client: client}
 }
 
-func (c *dollarQuoteHTTPClient) GetDollarQuote(ctx context.Context) (*DollarQuoteResponse, error) {
+func (c *dollarexchangerateHTTPClient) GetDollarExchangeRate(ctx context.Context) (*DollarExchangeRateResponse, error) {
 	request, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
 	if err != nil {
 		return nil, err
@@ -44,7 +44,7 @@ func (c *dollarQuoteHTTPClient) GetDollarQuote(ctx context.Context) (*DollarQuot
 		return nil, fmt.Errorf("error calling economi-api. Error: [%s]", string(body))
 	}
 
-	var dollarQuoreResponse DollarQuoteResponse
+	var dollarQuoreResponse DollarExchangeRateResponse
 	if err := json.Unmarshal(body, &dollarQuoreResponse); err != nil {
 		return nil, err
 	}

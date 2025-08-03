@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
+	"github.com/dprio/currency-exchange/server/internal/domain/dollarexchangerate"
 	"github.com/dprio/currency-exchange/server/internal/infrastructure/httpclient/economiapi"
 )
 
 type Adapter interface {
-	GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, error)
+	GetUSDExchangeRate(ctx context.Context) (*dollarexchangerate.DollarExchangeRate, error)
 }
 
 type (
@@ -29,7 +29,7 @@ func New(client client) Adapter {
 	}
 }
 
-func (a *adapter) GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, error) {
+func (a *adapter) GetUSDExchangeRate(ctx context.Context) (*dollarexchangerate.DollarExchangeRate, error) {
 	ctxTimeout, cancel := context.WithTimeout(ctx, 200*time.Millisecond)
 	defer cancel()
 
@@ -39,5 +39,5 @@ func (a *adapter) GetUSDQuote(ctx context.Context) (*dollarquote.DollarQuote, er
 		return nil, err
 	}
 
-	return resp.ToDollarQuote()
+	return resp.ToDollarExchangeRate()
 }

@@ -1,13 +1,13 @@
 package get
 
-import "github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
+import "github.com/dprio/currency-exchange/server/internal/domain/dollarexchangerate"
 
 type response struct {
 	DollarQuote float32 `json:"bid"`
 }
 
-func newResponse(dollarQuote *dollarquote.DollarQuote) *response {
+func newResponse(exchangeRate *dollarexchangerate.DollarExchangeRate) *response {
 	return &response{
-		DollarQuote: dollarQuote.Value,
+		DollarQuote: exchangeRate.Value,
 	}
 }

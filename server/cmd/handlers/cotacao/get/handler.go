@@ -4,15 +4,15 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/dprio/currency-exchange/server/internal/usecase/getdollarquote"
+	"github.com/dprio/currency-exchange/server/internal/usecase/getdollarexchangerate"
 	"github.com/dprio/currency-exchange/server/pkg/handler"
 )
 
 type Handler struct {
-	getDollarQuoteUseCase getdollarquote.UseCase
+	getDollarQuoteUseCase getdollarexchangerate.UseCase
 }
 
-func New(usecase getdollarquote.UseCase) handler.HandlerInterface {
+func New(usecase getdollarexchangerate.UseCase) handler.HandlerInterface {
 	return &Handler{
 		getDollarQuoteUseCase: usecase,
 	}

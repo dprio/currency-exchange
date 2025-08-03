@@ -3,7 +3,7 @@ package economiapi
 import (
 	"strconv"
 
-	"github.com/dprio/currency-exchange/server/internal/domain/dollarquote"
+	"github.com/dprio/currency-exchange/server/internal/domain/dollarexchangerate"
 )
 
 type (
@@ -26,13 +26,13 @@ type (
 	}
 )
 
-func (r *ExchangeRateResponse) ToDollarQuote() (*dollarquote.DollarQuote, error) {
+func (r *ExchangeRateResponse) ToDollarExchangeRate() (*dollarexchangerate.DollarExchangeRate, error) {
 	bid, err := strconv.ParseFloat(r.USDBRL.Bid, 64)
 	if err != nil {
 		return nil, err
 	}
 
-	return &dollarquote.DollarQuote{
+	return &dollarexchangerate.DollarExchangeRate{
 		Value: float32(bid),
 	}, nil
 }
